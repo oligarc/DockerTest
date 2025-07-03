@@ -98,7 +98,7 @@ Feels like a lot, honestly. What if we could automatize this?
 
 Ok I need you focused on this. It'll be a lot more helpful if I just post you a photo of the indexed code (trust me, I learned my lesson)
 
- ![indexedCode](indexedCode.png)
+ ![indexedCode](images/indexedCode.png)
 
  Ok let me tell you a few things in here
 
@@ -134,7 +134,7 @@ Ok, we need to configure a folder into our host machine in order to store and ke
 
 Now that we got the concept, we need to configure.
 
-![volumes](volumes.png)
+![volumes](images/volumes.png)
 
 We configured the volumes: mongo-data: that is an anonymous volume.
 
@@ -147,3 +147,26 @@ Now make sure, docker compose up and create two persons with the endpoints. Stop
 
 Spoiler: It will.
 
+But what if we have a container that it's gonna be used in development and anytime we change our app we immediately want to update the app??
+
+### Context and hot reload
+
+First things first, we need to create a new Dockerfile. This time it'll be Dockerfile.dev
+
+We need to install nodemon to hot reload the app, it's gonna be the same as the previous Dockerfile but with nodemon and changing the CMD to nodemon too. I've made a screenshoot for you. Follow the order.
+
+![newDockerfile](images/dockerfile-dev.png)
+
+Now we also need a new docker-compose-dev.yml
+
+It'll be the same as previous docker-compose but we'll add context (path to the code) and the dockerfile that we want to use.
+
+We also need to tell the volumes. We're gonna tell that our actual route (. in this case) is going to be mounted into the destiny path
+
+Don't worry, here's your screenshoot.
+
+![newDockerCompose](images/docker-compose-dev.png)
+
+You using Windows? You surely are gonna have one BIG problem
+
+## Problem with hot reload in Windows
