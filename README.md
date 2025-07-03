@@ -1,5 +1,6 @@
-# DockerTest
-Testing Docker and making it mine
+# Be the Docker
+
+*Please note this is a tutorial of mine, if it's helpful for you I will be happy but if it doesn't go and google out there*
 
 ## First steps
 
@@ -97,6 +98,52 @@ Feels like a lot, honestly. What if we could automatize this?
 
 Ok I need you focused on this. It'll be a lot more helpful if I just post you a photo of the indexed code (trust me, I learned my lesson)
 
+ ![indexedCode](indexedCode.png)
 
+ Ok let me tell you a few things in here
 
+ - CONTAINER'S NAMES MUST BE LOWERCASE!!!!!
+ - LINKS, PORTS AND ENVIRONMENTS MUST BE A LIST, DON'T FORGET ABOUT THE SPACE BETWEEN - AND THE DATA
+ - If you can, omit the version (it's not mandatory)
+
+ Ok you're gonna be fine with that tips.
+
+ Now...
+
+ - docker compose up . It's like magic
+ 
+ To stop the execution CTRL+C
+
+Hey, but you didn't specify the network here!
+
+That's true, and it's because of Docker intelligence. When we're making a docker-compose.yml Docker immediately knows that they're gonna be related and create a network asigning it to each container.
+
+ - docker compose down to clean the containers and images that Docker compose made
+
+Nice... HEY! What happens if I remove a container that contained tons of data in the database? Do I lost it?
+
+Yes, but you should't lost more data thanks to...
+
+### Volumes
+
+Ok, we need to configure a folder into our host machine in order to store and keep that data. We have 3 kinds of volumes:
+
+1. Anonymous: We only specify the path but can't point to them.
+2. Host: You decide the folder and where.
+3. Named: Anonymous but can point it.
+
+Now that we got the concept, we need to configure.
+
+![volumes](volumes.png)
+
+We configured the volumes: mongo-data: that is an anonymous volume.
+
+Then, in the mongo container configuration we need to put it
+
+- mongo-data will be the volume name you're creating (could be anyone but they need to match)
+- /data/db is the path route where MongoDB store data. You could google that, also I made sure you have the route for MySQL and Postgres
+
+Now make sure, docker compose up and create two persons with the endpoints. Stop the execution and docker compose down the whole thing. Make sure to store the ids of the objects. Go back to docker compose up and see if they match
+
+Spoiler: It will.
 

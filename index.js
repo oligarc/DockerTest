@@ -10,7 +10,7 @@ const personaSchema = new mongoose.Schema({ //Defines un esquema Moongose para g
 const Persona = mongoose.model('Persona', personaSchema); //Y aquí creas el modelo basado en ese esquema
 const app = express();
 
-mongoose.connect('mongodb://oliver:password@localhost:27017/mi_base_de_datos?authSource=admin')
+mongoose.connect('mongodb://oliver:password@mongoBaseDatos:27017/mi_base_de_datos?authSource=admin')
 
 app.get('/',async(_req,res) => {
     console.log("Listando...");
