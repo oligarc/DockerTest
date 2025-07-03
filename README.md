@@ -30,3 +30,27 @@ Great man, you're using a container based on mongo to connect your app. What if 
 
 ## Second steps
 
+Ok folks, now it's time. If you want to dockerize your app you have to create a Dockerfile. Just that, no extension
+
+### Dockerfile
+
+FROM node:18 //Base image and version you want, maybe latest
+
+WORKDIR /app //Creates the folder that's gonna contain the source code. It doesn't point to your local machine
+
+COPY package*.json ./
+
+COPY . .
+
+RUN npm install //Install the dependencies
+
+EXPOSE 3000 //Number of port in which we want to run the app
+
+CMD [ "node","index.js" ] //Command to run the program first (node) and then the route to the program
+
+Ok, now we just should save the file and docker build. BUT WAIT!!
+
+### Problem with communications
+
+Our nodeJS and MongoDB containers shouldn't communicate between them just because we want to. We can access a container from the outside but in the inside we have to create an intern network.
+
