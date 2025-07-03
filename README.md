@@ -54,3 +54,49 @@ Ok, now we just should save the file and docker build. BUT WAIT!!
 
 Our nodeJS and MongoDB containers shouldn't communicate between them just because we want to. We can access a container from the outside but in the inside we have to create an intern network.
 
+- docker network create miRed
+
+Nice, now I have a network that is going to be used to communicate each container. But wait, didn't the APP pointed to localhost in the connection to the database? Welp, yes. You must take a look into that and change localhost to the database container name!
+
+BEFORE mongoose.connect('mongodb://oliver:password@localhost:27017/mi_base_de_datos?authSource=admin')
+AFTER mongoose.connect('mongodb://oliver:mongoBaseDatos@localhost:27017/mi_base_de_datos?authSource=admin')
+
+Wait wait wait, but the mongo container didn't have a network associated. That's right, remove that container and create a new one linking the new red
+
+- docker create -p27017:27017 --name mongoBaseDatos --network miRed -e MONGO_INITDB_ROOT_USERNAME=oliver -e MONGO_INITDB_ROOT_PASSWORD=password mongo
+
+YES!!! Now I totally have it. Hey, weren't we supposed to be doing a image and container of our app?
+
+### Creating the image and container of our app
+
+docker build is gonna create a image based in our Dockerfile! And our Dockerfile was for our app!
+
+- docker build -t imageName:version pathRoute // for example docker build -t miapp:1 .
+
+Try docker images and see the magic. Nah, don't thank me.
+
+Hey but no container at all! Really? Do I need to tell you? 
+
+Ok... 
+
+- docker create -p3000:3000 --name miAppContainer --network miRed miapp:1 //Remember last argument is the name of your created image
+
+WOHO!! I can feel the power!! I know, I know...
+
+## Summary until now
+
+Ok, so if I had to make this again I need to:
+
+1. Download an image
+2. Create a network
+3. Create a container: Asign the ports,name,environment variables, asign the network, asign the image:tag...
+
+Feels like a lot, honestly. What if we could automatize this?
+
+### Docker compose
+
+Ok I need you focused on this. It'll be a lot more helpful if I just post you a photo of the indexed code (trust me, I learned my lesson)
+
+
+
+
